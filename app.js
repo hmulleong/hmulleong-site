@@ -26,7 +26,7 @@ function giftsSorted(){return S.gifts.slice().sort(function(a,b){return (b.date|
 /* ---------- views ---------- */
 function header(){
   return '<header class="top"><div class="wrap"><a class="logo" href="#top">'+esc(S.site.name.toLowerCase())+'.</a>'+
-    '<nav class="nav" aria-label="주 메뉴"><a href="#characters">Characters</a><a href="#news">Notice &amp; News</a><a href="#gifts">축전 · 선물</a></nav></div></header>';
+    '<nav class="nav" aria-label="주 메뉴"><a href="#characters">Characters</a><a href="#news">Notice &amp; News</a><a href="#gifts">축전 · 선물</a>'+(hasLinks()?'<a href="#links">Links</a>':"")+'</nav></div></header>';
 }
 function heroMedia(){
   var v=src(S.site.video),p=src(S.site.poster),op=Math.max(.1,Math.min(1,(+S.site.opacity||60)/100));
@@ -88,6 +88,23 @@ function giftsSec(){
   return '<section class="sec" id="gifts"><div class="wrap"><div class="sec-head"><div><h2>Gifts &amp; Art</h2><p>받은 축전과 선물</p></div><div class="chips" role="group" aria-label="축전 · 선물 분류">'+chips+'</div></div>'+
     '<div class="mason" id="mason">'+giftsGrid()+'</div></div></section>';
 }
+function platforms(){return (S.site.platforms||[]).filter(function(l){return l&&l.label&&safeUrl(l.url);});}
+function hasLinks(){return platforms().length>0||!!safeUrl(S.site.pushoong);}
+function linksSec(){
+  if(!hasLinks())return"";
+  var pl=platforms(),pu=safeUrl(S.site.pushoong);
+  return '<section class="sec" id="links"><div class="wrap"><div class="sec-head"><div><h2>Links</h2><p>캐릭터를 만날 수 있는 곳, 그리고 하고 싶은 말을 남기는 곳.</p></div></div>'+
+    '<div class="lk-grid">'+
+    (pu?'<a class="lk lk-ask iri" href="'+esc(pu)+'" target="_blank" rel="noopener"><span class="lk-k">ANONYMOUS · 푸슝</span><span class="lk-t">익명으로 말 걸기 ↗</span><span class="lk-d">궁금한 것, 하고 싶은 말을 익명으로 남겨주세요.</span></a>':"")+
+    pl.map(function(l,i){return '<a class="lk" href="'+esc(safeUrl(l.url))+'" target="_blank" rel="noopener"><span class="num">'+pad(i+1)+'</span><span class="lk-t">'+esc(l.label)+' ↗</span>'+(l.note?'<span class="lk-d">'+esc(l.note)+'</span>':"")+'</a>';}).join("")+
+    '</div></div></section>';
+}
+function charLinks(c){
+  var ls=(c.links||[]).filter(function(l){return l&&safeUrl(l.url);});
+  if(!ls.length&&safeUrl(c.link))ls=[{label:"",url:c.link}];
+  if(!ls.length)return"";
+  return '<div class="c-links">'+ls.map(function(l){return '<a class="pill" href="'+esc(safeUrl(l.url))+'" target="_blank" rel="noopener"><span class="l">'+(l.label?esc(l.label)+'에서 만나기':"캐릭터 만나러 가기")+' ↗</span></a>';}).join("")+'</div>';
+}
 function outro(){
   return '<section class="sec wrap outro"><h2><span>No way</span><span>out.</span></h2>'+(S.site.outro?'<p>'+esc(S.site.outro)+'</p>':"")+
     '<a href="#characters" class="pill"><span class="l">들어가기</span><span class="a">'+ARROW+'</span></a></section>';
@@ -120,7 +137,7 @@ document.addEventListener("submit",function(e){
   setAdult(true);var sy=window.scrollY;lastMode=null;route();window.scrollTo(0,sy);
 });
 function charView(c){
-  var i=S.chars.indexOf(c),n=S.chars.length,im=src(c.cover),link=safeUrl(c.link);
+  var i=S.chars.indexOf(c),n=S.chars.length,im=src(c.cover);
   var prev=S.chars[(i-1+n)%n],next=S.chars[(i+1)%n],ok=isAdult(),locked=c.adult&&!ok;
   var move=canWrite&&n>1?'<button class="abtn" data-act="move" data-d="-1" data-id="'+esc(c.id)+'">← 앞으로</button><button class="abtn" data-act="move" data-d="1" data-id="'+esc(c.id)+'">뒤로 →</button>':"";
   return subHeader()+'<main class="wrap detail"><a class="back" href="#characters">← Characters</a><div class="d-grid">'+
@@ -130,7 +147,7 @@ function charView(c){
     (locked?gateBox("이 캐릭터는 성인 설정과 서사가 중심이라 만 19세 이상만 볼 수 있어요."):
     (c.body?'<div class="prose">'+prose(c.body)+'</div>':"")+
     (c.adultBody?(ok?'<section class="adult-sec"><h2><span class="b19" style="position:static;width:28px;height:28px;font-size:11px">19</span>성인 설정 · 서사</h2><div class="prose">'+prose(c.adultBody)+'</div></section>':gateBox("아래에 성인 설정과 서사가 있어요. 만 19세 이상만 볼 수 있어요.")):"")+
-    (link?'<a class="pill" href="'+esc(link)+'" target="_blank" rel="noopener"><span class="l">캐릭터 만나러 가기 ↗</span><span class="a">'+ARROW+'</span></a>':""))+
+    charLinks(c))+
     (n>1?'<div class="d-nav"><a class="abtn" style="display:inline-flex;align-items:center;text-decoration:none" href="#c-'+esc(prev.id)+'">← '+esc(prev.name)+'</a><a class="abtn" style="display:inline-flex;align-items:center;text-decoration:none" href="#c-'+esc(next.id)+'">'+esc(next.name)+' →</a></div>':"")+
     adminRow("char",c.id,move)+'</div></div></main>'+footer();
 }
@@ -170,7 +187,7 @@ function route(){
     var item=m[1]==="c"?find(S.chars,m[2]):m[1]==="p"?find(S.posts,m[2]):find(S.gifts,m[2]);
     if(item){mode=h;html=m[1]==="c"?charView(item):m[1]==="p"?postView(item):giftView(item);}
   }else if(h==="all-news"){mode=h;html=allNews();}
-  if(mode==="home"){anchor=h||null;if(lastMode!=="home"){html=hero()+charsSec()+newsSec()+giftsSec()+outro()+footer();}}
+  if(mode==="home"){anchor=h||null;if(lastMode!=="home"){html=hero()+charsSec()+newsSec()+giftsSec()+linksSec()+outro()+footer();}}
   if(html!=null){app.innerHTML=html+dock();if(mode==="home")bindCarousel();}
   if(mode!=="home"){window.scrollTo(0,0);}
   else if(lastMode!=="home"&&anchor){var el=document.getElementById(anchor);if(el)el.scrollIntoView();}

@@ -32,9 +32,18 @@
   "video": "assets/hero.mp4",        ← 배경 영상 (MP4 또는 GIF)
   "poster": "assets/hero-poster.jpg",← 영상이 뜨기 전 보이는 사진
   "opacity": 60,                     ← 영상 진하기 (10~100)
-  "outro": "《얕은 캐릭 없음. 빠져나갈 수 없음 주의》"
+  "outro": "《얕은 캐릭 없음. 빠져나갈 수 없음 주의》",
+  "pushoong": "https://푸슝-주소",       ← 비워두면 푸슝 칸이 안 보여요
+  "platforms": [                     ← 아래 Links 칸에 나오는 앱 링크
+    { "label": "Caveduck", "url": "https://...", "note": "한 줄 설명(선택)" },
+    { "label": "Bloom",    "url": "", "note": "" }
+  ]
 }
 ```
+
+- `url`이 빈 항목은 사이트에 안 보여요. 주소만 채우면 나타나요.
+- 앱을 더 넣으려면 `{ "label": "앱 이름", "url": "https://...", "note": "" }`를 쉼표로 이어 붙이면 돼요.
+- 푸슝이나 앱 링크가 하나라도 있으면 메뉴에 **Links**가 생기고, 축전·선물 아래에 Links 칸이 나와요.
 
 ### 캐릭터 (`chars`) — 적은 순서대로 카드가 나와요
 ```json
@@ -44,7 +53,10 @@
   "role": "한 줄 소개",
   "tags": ["소꿉친구", "순애"],
   "cover": "assets/dotaeho.jpg",     ← 세로 3:4 이미지 추천
-  "link": "https://캐릭터-플랫폼-주소",
+  "links": [                         ← 몇 개든 OK. 적은 순서대로 버튼이 나와요
+    { "label": "Caveduck", "url": "https://..." },
+    { "label": "Bloom",    "url": "https://..." }
+  ],
   "body": "소개글.\n\n빈 줄(\\n\\n)로 문단을 나눠요. **이렇게** 감싸면 굵게.",
   "adult": false,                    ← true면 19 표시 + 인증 전 잠김
   "adultBody": ""                    ← 성인 인증한 사람에게만 보이는 설정

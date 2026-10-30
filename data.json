@@ -4,7 +4,30 @@
     "video": "assets/hero.mp4",
     "poster": "assets/hero-poster.jpg",
     "opacity": 60,
-    "outro": "《얕은 캐릭 없음. 빠져나갈 수 없음 주의》"
+    "outro": "《얕은 캐릭 없음. 빠져나갈 수 없음 주의》",
+    "pushoong": "",
+    "platforms": [
+      {
+        "label": "Caveduck",
+        "url": "",
+        "note": ""
+      },
+      {
+        "label": "Bloom",
+        "url": "",
+        "note": ""
+      },
+      {
+        "label": "Tingle",
+        "url": "",
+        "note": ""
+      },
+      {
+        "label": "Umai",
+        "url": "",
+        "note": ""
+      }
+    ]
   },
   "chars": [
     {
@@ -15,7 +38,16 @@
         "예시"
       ],
       "cover": "assets/hero-poster.jpg",
-      "link": "",
+      "links": [
+        {
+          "label": "Caveduck",
+          "url": ""
+        },
+        {
+          "label": "Bloom",
+          "url": ""
+        }
+      ],
       "body": "여기에 캐릭터 소개를 적어요.\n\n빈 줄로 문단을 나누고, **별표 두 개**로 감싸면 강조돼요.",
       "adult": false,
       "adultBody": ""
@@ -28,7 +60,16 @@
         "예시"
       ],
       "cover": "",
-      "link": "",
+      "links": [
+        {
+          "label": "Caveduck",
+          "url": ""
+        },
+        {
+          "label": "Bloom",
+          "url": ""
+        }
+      ],
       "body": "",
       "adult": false,
       "adultBody": ""
@@ -41,7 +82,16 @@
         "예시"
       ],
       "cover": "",
-      "link": "",
+      "links": [
+        {
+          "label": "Caveduck",
+          "url": ""
+        },
+        {
+          "label": "Bloom",
+          "url": ""
+        }
+      ],
       "body": "",
       "adult": false,
       "adultBody": ""
