@@ -1,0 +1,63 @@
+{
+  "site": {
+    "name": "Hmulleong",
+    "video": "assets/hero.mp4",
+    "poster": "assets/hero-poster.jpg",
+    "opacity": 60,
+    "outro": "《얕은 캐릭 없음. 빠져나갈 수 없음 주의》"
+  },
+  "chars": [
+    {
+      "id": "ex1",
+      "name": "예시 캐릭터 1",
+      "role": "카드 모양을 보여주는 예시예요. 수정하거나 지워주세요.",
+      "tags": [
+        "예시"
+      ],
+      "cover": "assets/hero-poster.jpg",
+      "link": "",
+      "body": "여기에 캐릭터 소개를 적어요.\n\n빈 줄로 문단을 나누고, **별표 두 개**로 감싸면 강조돼요.",
+      "adult": false,
+      "adultBody": ""
+    },
+    {
+      "id": "ex2",
+      "name": "예시 캐릭터 2",
+      "role": "한 줄 소개가 들어가는 자리",
+      "tags": [
+        "예시"
+      ],
+      "cover": "",
+      "link": "",
+      "body": "",
+      "adult": false,
+      "adultBody": ""
+    },
+    {
+      "id": "ex3",
+      "name": "예시 캐릭터 3",
+      "role": "한 줄 소개가 들어가는 자리",
+      "tags": [
+        "예시"
+      ],
+      "cover": "",
+      "link": "",
+      "body": "",
+      "adult": false,
+      "adultBody": ""
+    }
+  ],
+  "posts": [
+    {
+      "id": "welcome",
+      "kind": "notice",
+      "title": "흐물렁 블로그를 열었어요",
+      "date": "2026-10-25",
+      "pinned": true,
+      "cover": "",
+      "link": "",
+      "body": "캐릭터 소개와 공지, 업데이트 소식을 이곳에 모아 올립니다.\n\n받은 축전과 선물도 차곡차곡 모아둘게요."
+    }
+  ],
+  "gifts": []
+}
