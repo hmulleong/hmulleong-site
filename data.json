@@ -15,24 +15,24 @@
   "chars": [
     {
       "id": "ex1",
-      "name": "예시 캐릭터 1",
-      "role": "카드 모양을 보여주는 예시예요. 수정하거나 지워주세요.",
+      "name": "린웨이",
+      "role": "꼬맹아. X먹히고 싶어?",
       "tags": [
-        "예시"
+        "느와르", "오지콤", "아저씨"
       ],
       "cover": "assets/hero-poster.jpg",
       "links": [
         {
-          "label": "Caveduck",
-          "url": ""
+          "label": "🥕Umai🥕",
+          "url": "https://uumm.ai/works/01a14fff-285d-777a-8e1e-c1f72f8d97a0"
         },
         {
-          "label": "Bloom",
-          "url": ""
+          "label": "💚Teapot💚",
+          "url": "https://teapotchat.com/character/L1mGIR03wYXiAC7VRT9O"
         }
       ],
-      "body": "여기에 캐릭터 소개를 적어요.\n\n빈 줄로 문단을 나누고, **별표 두 개**로 감싸면 강조돼요.",
-      "adult": false,
+      "body": "칭챙총이라는 소리에 달려나간 유저.\n마지막 골목을 돌았을 때, 잡힌 허리.\n꼬맹아. 따먹히고 싶어?",
+      "adult": true,
       "adultBody": ""
     },
     {
