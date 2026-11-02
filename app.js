@@ -79,14 +79,31 @@ function giftsGrid(){
   return '<div class="thanks iri"><span style="font:500 11px var(--f-display);letter-spacing:.14em;color:var(--dim)">THANK YOU</span><b>From you,<br>with love.</b><small>받은 축전과 선물을 모아두는 곳이에요. 마음을 보내주신 분들께 고마워요.</small></div>'+
     (items||'<div class="empty-g">'+(all.length?"이 분류에는 아직 없어요.":"아직 올라온 축전·선물이 없어요.")+'</div>');
 }
-function giftsSec(){
+function giftChips(){
   var all=S.gifts;
-  var chips=["전체","축전","선물"].map(function(l){
+  return ["전체","축전","선물"].map(function(l){
     var c=l==="전체"?all.length:all.filter(function(g){return g.kind===l;}).length;
     return '<button type="button" class="chip" data-act="gf" data-v="'+l+'" aria-pressed="'+(l===giftFilter)+'">'+l+'<span>'+c+'</span></button>';
   }).join("");
-  return '<section class="sec" id="gifts"><div class="wrap"><div class="sec-head"><div><h2>Gifts &amp; Art</h2><p>받은 축전과 선물</p></div><div class="chips" role="group" aria-label="축전 · 선물 분류">'+chips+'</div></div>'+
-    '<div class="mason" id="mason">'+giftsGrid()+'</div></div></section>';
+}
+function giftsSec(){
+  var list=giftsSorted().filter(function(g){return src(g.image);});
+  var head='<div class="wrap"><div class="sec-head"><div><h2>Gifts &amp; Art</h2><p>받은 축전과 선물. 마음을 보내주신 분들께 고마워요.</p></div>'+
+    (S.gifts.length?'<a href="#all-gifts" class="pill"><span class="l">전체 보기</span><span class="a">'+ARROW+'</span></a>':"")+'</div></div>';
+  if(!list.length)return '<section class="sec" id="gifts">'+head+'<div class="wrap"><div class="mason">'+giftsGrid()+'</div></div></section>';
+  var base=list.slice();while(base.length<8)base=base.concat(list);
+  function item(g,dup){
+    var im=src(g.image);
+    return '<a class="mq-item" href="#g-'+esc(g.id)+'"'+(dup?' tabindex="-1" aria-hidden="true"':"")+'><img src="'+esc(im)+'" alt="'+esc(g.title||g.kind)+'" loading="lazy">'+
+      '<span class="mq-cap"><span class="tag '+(g.kind==="축전"?"w":"g")+'">'+esc(g.kind)+'</span>'+(g.from?'<span>from '+esc(g.from)+'</span>':"")+'</span></a>';
+  }
+  var half=base.map(function(g,i){return item(g,i>=list.length);}).join("");
+  var dup=base.map(function(g){return item(g,true);}).join("");
+  return '<section class="sec" id="gifts">'+head+'<div class="mq" aria-label="받은 축전과 선물"><div class="mq-track" style="--dur:'+(base.length*6)+'s">'+half+dup+'</div></div></section>';
+}
+function allGifts(){
+  return subHeader()+'<main class="wrap detail"><a class="back" href="#gifts">← 메인으로</a><div class="sec-head" style="margin-top:24px"><div><h2>Gifts &amp; Art</h2><p>받은 축전과 선물</p></div>'+
+    '<div class="chips" role="group" aria-label="축전 · 선물 분류">'+giftChips()+'</div></div><div class="mason" id="mason">'+giftsGrid()+'</div></main>'+footer();
 }
 function platforms(){return (S.site.platforms||[]).filter(function(l){return l&&l.label&&safeUrl(l.url);});}
 function hasLinks(){return platforms().length>0||!!safeUrl(S.site.pushoong);}
@@ -187,6 +204,7 @@ function route(){
     var item=m[1]==="c"?find(S.chars,m[2]):m[1]==="p"?find(S.posts,m[2]):find(S.gifts,m[2]);
     if(item){mode=h;html=m[1]==="c"?charView(item):m[1]==="p"?postView(item):giftView(item);}
   }else if(h==="all-news"){mode=h;html=allNews();}
+  else if(h==="all-gifts"){mode=h;html=allGifts();}
   if(mode==="home"){anchor=h||null;if(lastMode!=="home"){html=hero()+charsSec()+newsSec()+giftsSec()+linksSec()+outro()+footer();}}
   if(html!=null){app.innerHTML=html+dock();if(mode==="home")bindCarousel();}
   if(mode!=="home"){window.scrollTo(0,0);}

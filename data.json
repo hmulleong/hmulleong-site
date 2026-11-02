@@ -9,7 +9,7 @@
     "platforms": [
       { "label": "오픈채팅", "url": "https://open.kakao.com/o/s21vvU4h", "note": "흐물렁 오픈채팅방" },
       { "label": "Umai", "url": "https://uumm.ai/profile/019f93b6-8842-7612-869a-98cb7b661a76", "note": "우마이 흐물렁 프로필" },
-      { "label": "Teapot", "url": "https://teapotchat.com/user/Aqin9D78sRU5x4ApI4JU2JGRQLl1", "note": "티팟 흐물렁 프로필" },
+      { "label": "Teapot", "url": "https://teapotchat.com/user/Aqin9D78sRU5x4ApI4JU2JGRQLl1", "note": "티팟 흐물렁 프로필" }
     ]
   },
   "chars": [
