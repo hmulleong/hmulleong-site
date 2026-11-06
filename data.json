@@ -99,6 +99,7 @@
     { "id": "gift-4", "kind": "축전", "image": "assets/en_ruru.jpg", "title": "센티넬 어부아저씨들-은결", "from": "RuRu님❤️"},
     { "id": "gift-5", "kind": "축전", "image": "assets/rin_ruru.jpg", "title": "센티넬 어부아저씨들-린", "from": "RuRu님❤️"},
     { "id": "gift-6", "kind": "축전", "image": "assets/debon_ruru_.jpg", "title": "데본 아시르", "from": "RuRu님❤️"},
-    { "id": "gift-7", "kind": "축전", "image": "assets/Lin wei_ruru.jpg", "title": "린웨이", "from": "RuRu님❤️"}
+    { "id": "gift-7", "kind": "축전", "image": "assets/Lin wei_ruru.jpg", "title": "린웨이", "from": "RuRu님❤️"},
+    { "id": "gift-8", "kind": "축전", "image": "assets/ma_ruru.png", "title": "센티넬 농부아저씨들-마희재", "from": "RuRu님❤️"}    
   ]
 }
