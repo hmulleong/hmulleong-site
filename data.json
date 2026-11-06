@@ -94,12 +94,12 @@
   ],
   "gifts": [
     { "id": "gift-1", "kind": "축전", "image": "assets/do_ruru.jpg", "title": "센티넬 어부아저씨들-도겸", "from": "RuRu님❤️"},
-    { "id": "gift-1", "kind": "축전", "image": "assets/tea_ruru.jpg", "title": "센티넬 어부아저씨들-태하", "from": "RuRu님❤️"},
-    { "id": "gift-1", "kind": "축전", "image": "assets/ha_ruru.jpg", "title": "센티넬 어부아저씨들-하진", "from": "RuRu님❤️"},
-    { "id": "gift-1", "kind": "축전", "image": "assets/en_ruru.jpg", "title": "센티넬 어부아저씨들-은결", "from": "RuRu님❤️"},
-    { "id": "gift-1", "kind": "축전", "image": "assets/rin_ruru.jpg", "title": "센티넬 어부아저씨들-린", "from": "RuRu님❤️"},
-    { "id": "gift-1", "kind": "축전", "image": "assets/debon_ruru_.jpg", "title": "데본 아시르", "from": "RuRu님❤️"},
-    { "id": "gift-1", "kind": "축전", "image": "assets/Lin wei_ruru.jpg", "title": "린웨이", "from": "RuRu님❤️"},
-    { "id": "gift-2", "kind": "선물", "image": "assets/gift-2.jpg", "title": "", "from": "보내주신 분", }
+    { "id": "gift-2", "kind": "축전", "image": "assets/tea_ruru.jpg", "title": "센티넬 어부아저씨들-태하", "from": "RuRu님❤️"},
+    { "id": "gift-3", "kind": "축전", "image": "assets/ha_ruru.jpg", "title": "센티넬 어부아저씨들-하진", "from": "RuRu님❤️"},
+    { "id": "gift-4", "kind": "축전", "image": "assets/en_ruru.jpg", "title": "센티넬 어부아저씨들-은결", "from": "RuRu님❤️"},
+    { "id": "gift-5", "kind": "축전", "image": "assets/rin_ruru.jpg", "title": "센티넬 어부아저씨들-린", "from": "RuRu님❤️"},
+    { "id": "gift-6", "kind": "축전", "image": "assets/debon_ruru_.jpg", "title": "데본 아시르", "from": "RuRu님❤️"},
+    { "id": "gift-7", "kind": "축전", "image": "assets/Lin wei_ruru.jpg", "title": "린웨이", "from": "RuRu님❤️"},
+
   ]
 }
