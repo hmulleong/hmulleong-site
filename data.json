@@ -1,8 +1,8 @@
 {
   "site": {
     "name": "Hmulleong",
-    "video": "assets/hero.mp4",
-    "poster": "assets/linwei/Lin wei_main.jpg",
+    "video": "assets/linwei/hero-poster.mp4",
+    "poster": "assets/linwei/hero-poster.png",
     "opacity": 60,
     "outro": "《얕은 캐릭 없음. 빠져나갈 수 없음 주의》",
     "pushoong": "https://pushoong.com/ask/7127235915",
@@ -34,7 +34,7 @@
         "오지콤",
         "아저씨"
       ],
-      "cover": "assets/linwei/linwei_poster.png",
+      "cover": "assets/linwei/Lin wei_main.jpg",
       "links": [
         {
           "label": "🥕Umai🥕",
