@@ -208,16 +208,34 @@ function charDetail(c){
     '<div class="cd-end">'+charLinks(c)+'<a class="abtn" style="display:inline-flex;align-items:center;text-decoration:none" href="#c-'+esc(c.id)+'">← 소개로 돌아가기</a></div>'+
     '</main>'+footer();
 }
+function storyHtml(t){
+  function inline(x){
+    return esc(x).replace(/\*\*(.+?)\*\*/g,"<strong>$1</strong>").replace(/(&quot;[^\n]*?&quot;|\u201C[^\u201D\n]*\u201D)/g,'<span class="q">$1</span>');
+  }
+  return String(t||"").replace(/\r/g,"").split(/\n\s*\n/).map(function(par){
+    par=par.trim();if(!par)return"";
+    if(par.charAt(0)==="*"&&par.slice(0,2)!=="**"){
+      var body=par.replace(/^\*+|\*+$/g,"").replace(/\*+\s*\n\s*\*+/g,"\n");
+      return '<p class="nar">'+inline(body).replace(/\n/g,"<br>")+'</p>';
+    }
+    var m=/^([^|\n]{1,20}?)\s*\|\s*([\s\S]+)$/.exec(par);
+    if(m)return '<p class="say"><span class="who">'+esc(m[1].trim())+'</span><span class="line">'+inline(m[2]).replace(/\n/g,"<br>")+'</span></p>';
+    return '<p>'+inline(par).replace(/\n/g,"<br>")+'</p>';
+  }).join("");
+}
 function openIntro(c,k){
   var list=(c.intros||[]).filter(function(x){return x&&(x.title||x.body);});var x=list[k];if(!x)return;
   var last=document.activeElement,link=safeUrl(x.link);
   var ov=document.createElement("div");ov.className="reader";ov.setAttribute("role","dialog");ov.setAttribute("aria-modal","true");ov.setAttribute("aria-label",x.title||"도입부");
-  ov.innerHTML='<article class="reader-in"><button type="button" class="reader-x" aria-label="닫기">✕</button><span class="intro-no">'+esc(c.name)+' · 도입부 '+(k+1)+'</span><h2>'+esc(x.title||("도입부 "+(k+1)))+'</h2><div class="prose">'+prose(x.body)+'</div>'+
+  ov.innerHTML='<article class="reader-in"><button type="button" class="reader-x" aria-label="닫기">✕</button><span class="intro-no">'+esc(c.name)+' · 도입부 '+(k+1)+'</span><h2>'+esc(x.title||("도입부 "+(k+1)))+'</h2><div class="prose story">'+(x.file?'<p class="nar">불러오는 중…</p>':storyHtml(x.body))+'</div>'+
     (link?'<a class="pill" href="'+esc(link)+'" target="_blank" rel="noopener"><span class="l">이 도입부로 시작하기 ↗</span></a>':"")+'</article>';
   function close(){ov.remove();document.removeEventListener("keydown",key);document.body.style.overflow="";if(last&&last.focus)last.focus();}
   function key(e){if(e.key==="Escape")close();}
   ov.addEventListener("click",function(e){if(e.target===ov||e.target.closest(".reader-x"))close();});
   document.addEventListener("keydown",key);document.body.appendChild(ov);document.body.style.overflow="hidden";ov.querySelector(".reader-x").focus();
+  if(x.file){var fu=src(x.file),box=ov.querySelector(".story");
+    if(!fu){box.innerHTML='<p class="nar">도입부 파일 이름을 확인해 주세요.</p>';return;}
+    fetch(encodeURI(fu),{cache:"no-cache"}).then(function(r){if(!r.ok)throw 0;return r.text();}).then(function(t){box.innerHTML=storyHtml(t);},function(){box.innerHTML='<p class="nar">도입부 파일('+esc(x.file)+')을 찾지 못했어요.</p>';});}
 }
 function openLightbox(c,k){
   var list=(c.bcuts||[]).filter(function(b){return src(typeof b==="string"?b:b&&b.image);}).map(function(b){return typeof b==="string"?{image:b,caption:""}:b;});

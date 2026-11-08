@@ -303,3 +303,13 @@ a{color:inherit}
 .reader-in h2{margin:0;font-family:var(--f-display);font-weight:300;font-size:clamp(28px,4vw,40px);letter-spacing:-.02em}
 .reader-x{position:absolute;top:14px;right:14px;width:44px;height:44px;border-radius:50%;border:1px solid var(--line-2);background:transparent;color:#fff;font-size:16px;cursor:pointer}
 .reader-x:hover{border-color:#fff}
+
+/* story formatting: *narration*, speaker | "dialogue" */
+.story{font-size:15.5px;line-height:1.95}
+.story p{margin:0 0 1.2em}
+.story .nar{color:#A9A9AE}
+.story .say{display:flex;flex-direction:column;gap:2px}
+.story .who{font:500 11.5px var(--f-display);letter-spacing:.12em;color:var(--dim)}
+.story .line{color:var(--fg)}
+.story .q{color:#F2CF6B}
+.reader-in{max-width:720px}
