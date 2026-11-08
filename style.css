@@ -313,3 +313,11 @@ a{color:inherit}
 .story .line{color:var(--fg)}
 .story .q{color:#F2CF6B}
 .reader-in{max-width:720px}
+
+/* main gifts strip: square tiles */
+.mq-item{width:320px;height:320px}
+.mq-item img{width:100%;height:100%;max-width:100%;object-fit:cover;object-position:center 30%}
+@media (max-width:640px){.mq-item{width:220px;height:220px}}
+
+/* "from ..." : black text with a white neon glow */
+.mq-cap>span:not(.tag),.gc .cap span{color:#0A0A0A;font-weight:600;font-size:13px;text-shadow:0 0 2px #fff,0 0 4px #fff,0 0 8px #fff,0 0 14px rgba(255,255,255,.85)}
