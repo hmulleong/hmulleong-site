@@ -116,7 +116,12 @@
           "body": "엘 앙클라 안에서는 칼을 뽑지 않는다.\n\n라 보카 주민은 건드리지 않는다.\n\n린웨이의 시절에는 하나가 더 있었다. **사람은 팔지 않는다.**"
         }
       ],
-      "bcuts": [],
+      "bcuts": [
+           { "image": "assets/linwei/B-cut-1.png"},
+           { "image": "assets/linwei/B-cut-2.png"},
+           { "image": "assets/linwei/B-cut-3.png"},
+           { "image": "assets/linwei/B-cut-4.jpg"},
+      ],
       "secret": [
         {
           "title": "어린 시절",
