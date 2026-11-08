@@ -163,10 +163,76 @@ function charView(c){
     ((c.tags||[]).length?'<div class="chips">'+c.tags.map(function(t){return'<span class="tag g">#'+esc(t)+'</span>';}).join("")+'</div>':"")+
     (locked?gateBox("이 캐릭터는 성인 설정과 서사가 중심이라 만 19세 이상만 볼 수 있어요."):
     (c.body?'<div class="prose">'+prose(c.body)+'</div>':"")+
+    '<a class="pill more" href="#cd-'+esc(c.id)+'"><span class="l">캐릭터 상세 보러가기</span><span class="a">'+ARROW+'</span></a>'+
     (c.adultBody?(ok?'<section class="adult-sec"><h2><span class="b19" style="position:static;width:28px;height:28px;font-size:11px">19</span>성인 설정 · 서사</h2><div class="prose">'+prose(c.adultBody)+'</div></section>':gateBox("아래에 성인 설정과 서사가 있어요. 만 19세 이상만 볼 수 있어요.")):"")+
     charLinks(c))+
     (n>1?'<div class="d-nav"><a class="abtn" style="display:inline-flex;align-items:center;text-decoration:none" href="#c-'+esc(prev.id)+'">← '+esc(prev.name)+'</a><a class="abtn" style="display:inline-flex;align-items:center;text-decoration:none" href="#c-'+esc(next.id)+'">'+esc(next.name)+' →</a></div>':"")+
     adminRow("char",c.id,move)+'</div></div></main>'+footer();
+}
+function soon(t){return '<div class="soon"><span class="soon-dot" aria-hidden="true"></span>'+(t||"준비 중이에요")+'</div>';}
+function block(no,title,inner){return '<section class="cd-sec"><div class="cd-h"><span class="num">'+no+'</span><h2>'+title+'</h2></div>'+inner+'</section>';}
+function mediaTag(v,alt){
+  var u=src(v);if(!u)return"";
+  if(/\.(mp4|webm|mov)(\?|#|$)/i.test(u))return '<video src="'+esc(u)+'" autoplay muted loop playsinline aria-label="'+esc(alt)+'"></video>';
+  return '<img src="'+esc(u)+'" alt="'+esc(alt)+'">';
+}
+function charDetail(c){
+  var i=S.chars.indexOf(c),locked=c.adult&&!isAdult();
+  var head='<a class="back" href="#c-'+esc(c.id)+'">← '+esc(c.name)+'</a>';
+  if(locked)return subHeader()+'<main class="wrap detail">'+head+'<div style="margin-top:28px">'+gateBox("이 캐릭터의 상세 설정은 만 19세 이상만 볼 수 있어요.")+'</div></main>'+footer();
+  var media=mediaTag(c.media||c.cover,c.name);
+  var prof=(c.profile||[]).filter(function(r){return r&&r.k;});
+  var top='<div class="cd-top"><div class="cd-media iri">'+(media||'<div class="ph" aria-hidden="true">'+esc((c.name||"?").charAt(0))+'</div>')+'</div>'+
+    '<div class="cd-prof"><span class="d-meta"><span class="num">'+pad(i+1)+'</span>CHARACTER FILE</span><h1>'+esc(c.name)+'</h1>'+(c.role?'<p class="sub">'+esc(c.role)+'</p>':"")+
+    (prof.length?'<dl class="ptable">'+prof.map(function(r){return'<div><dt>'+esc(r.k)+'</dt><dd>'+esc(r.v||"—")+'</dd></div>';}).join("")+'</dl>':soon("프로필 준비 중이에요"))+
+    ((c.tags||[]).length?'<div class="chips">'+c.tags.map(function(t){return'<span class="tag g">#'+esc(t)+'</span>';}).join("")+'</div>':"")+'</div></div>';
+  var intros=(c.intros||[]).filter(function(x){return x&&(x.title||x.body);});
+  var introHtml=intros.length?'<div class="intros">'+intros.map(function(x,k){
+      return '<button type="button" class="intro-card" data-act="intro" data-c="'+esc(c.id)+'" data-k="'+k+'"><span class="intro-no">도입부 '+(k+1)+'</span><span class="intro-t">'+esc(x.title||("도입부 "+(k+1)))+'</span>'+(x.hook?'<span class="intro-h">'+esc(x.hook)+'</span>':"")+'<span class="intro-go">읽어보기 →</span></button>';
+    }).join("")+'</div>':soon("도입부는 준비 중이에요");
+  var lore=(c.lore||[]).filter(function(x){return x&&x.title;});
+  var loreHtml='<div class="lore">'+lore.map(function(x){return '<article class="lore-card"><h3>'+esc(x.title)+'</h3><div class="prose">'+prose(x.body)+'</div></article>';}).join("")+'</div>';
+  var bc=(c.bcuts||[]).filter(function(b){return src(typeof b==="string"?b:b&&b.image);});
+  var gallery=bc.length?'<div class="bcuts">'+bc.map(function(b,k){var u=typeof b==="string"?b:b.image,cap=typeof b==="string"?"":(b.caption||"");
+      return '<button type="button" class="bc" data-act="lb" data-c="'+esc(c.id)+'" data-k="'+k+'" aria-label="B컷 '+(k+1)+' 크게 보기">'+(/\.(mp4|webm|mov)/i.test(u)?'<video src="'+esc(src(u))+'" muted loop autoplay playsinline></video>':'<img src="'+esc(src(u))+'" alt="" loading="lazy">')+(cap?'<span class="bc-cap">'+esc(cap)+'</span>':"")+'</button>';}).join("")+'</div>':soon();
+  var sec=Array.isArray(c.secret)?c.secret.filter(function(x){return x&&(x.title||x.body);}):(c.secret?[{title:"",body:c.secret}]:[]);
+  var secret=sec.length?'<p class="spoil-warn">⚠ 스포일러예요. 플레이 후 보는 걸 추천해요.</p><div class="spoils">'+sec.map(function(x){return '<details class="spoil"><summary><span class="spoil-n">'+esc(x.title||"비설")+'</span><span class="spoil-t">펼쳐 보기</span></summary><div class="prose">'+prose(x.body)+'</div></details>';}).join("")+'</div>':soon();
+  var tips=(c.tips||[]).filter(Boolean);
+  var tipHtml=tips.length?'<ol class="tips">'+tips.map(function(t){return'<li>'+esc(t)+'</li>';}).join("")+'</ol>':soon();
+  var mates=c.world?S.chars.filter(function(x){return x!==c&&x.world===c.world;}):[];
+  var mateHtml=mates.length?'<div class="mates">'+mates.map(function(x){var im=src(x.cover),lk=x.adult&&!isAdult();
+      return '<a class="mate'+(lk?" lock":"")+'" href="#c-'+esc(x.id)+'">'+(im?'<img src="'+esc(im)+'" alt="" loading="lazy">':'<span class="ph">'+esc((x.name||"?").charAt(0))+'</span>')+'<span class="mate-n">'+esc(x.name)+'</span></a>';}).join("")+'</div>':soon("같은 세계관 캐릭터는 준비 중이에요");
+  return subHeader()+'<main class="wrap detail">'+head+top+
+    (function(){var parts=[["도입부",introHtml]];if(lore.length)parts.push(["세계관",loreHtml]);parts.push(["B컷",gallery],["비설",secret],["플레이 팁",tipHtml],["같은 세계관"+(c.world?' <small>'+esc(c.world)+'</small>':""),mateHtml]);
+      return parts.map(function(pt,k){return block(pad(k+1),pt[0],pt[1]);}).join("");})()+
+    '<div class="cd-end">'+charLinks(c)+'<a class="abtn" style="display:inline-flex;align-items:center;text-decoration:none" href="#c-'+esc(c.id)+'">← 소개로 돌아가기</a></div>'+
+    '</main>'+footer();
+}
+function openIntro(c,k){
+  var list=(c.intros||[]).filter(function(x){return x&&(x.title||x.body);});var x=list[k];if(!x)return;
+  var last=document.activeElement,link=safeUrl(x.link);
+  var ov=document.createElement("div");ov.className="reader";ov.setAttribute("role","dialog");ov.setAttribute("aria-modal","true");ov.setAttribute("aria-label",x.title||"도입부");
+  ov.innerHTML='<article class="reader-in"><button type="button" class="reader-x" aria-label="닫기">✕</button><span class="intro-no">'+esc(c.name)+' · 도입부 '+(k+1)+'</span><h2>'+esc(x.title||("도입부 "+(k+1)))+'</h2><div class="prose">'+prose(x.body)+'</div>'+
+    (link?'<a class="pill" href="'+esc(link)+'" target="_blank" rel="noopener"><span class="l">이 도입부로 시작하기 ↗</span></a>':"")+'</article>';
+  function close(){ov.remove();document.removeEventListener("keydown",key);document.body.style.overflow="";if(last&&last.focus)last.focus();}
+  function key(e){if(e.key==="Escape")close();}
+  ov.addEventListener("click",function(e){if(e.target===ov||e.target.closest(".reader-x"))close();});
+  document.addEventListener("keydown",key);document.body.appendChild(ov);document.body.style.overflow="hidden";ov.querySelector(".reader-x").focus();
+}
+function openLightbox(c,k){
+  var list=(c.bcuts||[]).filter(function(b){return src(typeof b==="string"?b:b&&b.image);}).map(function(b){return typeof b==="string"?{image:b,caption:""}:b;});
+  if(!list.length)return;
+  var cur=k,last=document.activeElement;
+  var ov=document.createElement("div");ov.className="lb";ov.setAttribute("role","dialog");ov.setAttribute("aria-modal","true");ov.setAttribute("aria-label","B컷 보기");
+  function draw(){var it=list[cur],u=src(it.image);
+    ov.innerHTML='<button type="button" class="lb-x" aria-label="닫기">✕</button>'+(list.length>1?'<button type="button" class="lb-p" aria-label="이전">←</button><button type="button" class="lb-n" aria-label="다음">→</button>':"")+
+      '<figure>'+(/\.(mp4|webm|mov)/i.test(u)?'<video src="'+esc(u)+'" autoplay loop muted playsinline controls></video>':'<img src="'+esc(u)+'" alt="">')+'<figcaption>'+(it.caption?esc(it.caption)+' · ':"")+(cur+1)+' / '+list.length+'</figcaption></figure>';
+    ov.querySelector(".lb-x").focus();}
+  function close(){ov.remove();document.removeEventListener("keydown",key);if(last&&last.focus)last.focus();}
+  function go(d){cur=(cur+d+list.length)%list.length;draw();}
+  function key(e){if(e.key==="Escape")close();else if(e.key==="ArrowRight")go(1);else if(e.key==="ArrowLeft")go(-1);}
+  ov.addEventListener("click",function(e){var t=e.target;if(t===ov||t.closest(".lb-x"))close();else if(t.closest(".lb-n"))go(1);else if(t.closest(".lb-p"))go(-1);});
+  document.addEventListener("keydown",key);document.body.appendChild(ov);draw();
 }
 function postView(p){
   var im=src(p.cover),link=safeUrl(p.link);
@@ -199,8 +265,9 @@ var lastMode=null;
 function route(){
   if(!S)return;
   var h=decodeURIComponent((location.hash||"").slice(1)),html,mode="home",anchor=null;
-  var m=/^(c|p|g)-(.+)$/.exec(h);
-  if(m){
+  var m=/^(c|p|g)-(.+)$/.exec(h),cd=/^cd-(.+)$/.exec(h);
+  if(cd){var cc=find(S.chars,cd[1]);if(cc){mode=h;html=charDetail(cc);}}
+  else if(m){
     var item=m[1]==="c"?find(S.chars,m[2]):m[1]==="p"?find(S.posts,m[2]):find(S.gifts,m[2]);
     if(item){mode=h;html=m[1]==="c"?charView(item):m[1]==="p"?postView(item):giftView(item);}
   }else if(h==="all-news"){mode=h;html=allNews();}
@@ -245,6 +312,8 @@ function bindCarousel(){
 document.addEventListener("click",function(e){
   var b=e.target.closest("[data-act]");if(!b||!app.contains(b))return;
   var act=b.dataset.act;
+  if(act==="intro"){var ic=find(S.chars,b.dataset.c);if(ic)openIntro(ic,+b.dataset.k);return;}
+  if(act==="lb"){var lc=find(S.chars,b.dataset.c);if(lc)openLightbox(lc,+b.dataset.k);return;}
   if(act==="unadult"){setAdult(false);var sy=window.scrollY;lastMode=null;route();window.scrollTo(0,sy);return;}
   if(act==="prev"){setActive(active-1);return;}
   if(act==="next"){setActive(active+1);return;}
