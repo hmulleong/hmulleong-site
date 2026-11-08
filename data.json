@@ -2,7 +2,7 @@
   "site": {
     "name": "Hmulleong",
     "video": "assets/hero.mp4",
-    "poster": "assets/hero-poster.jpg",
+    "poster": "assets/linwei/Lin wei_main.jpg",
     "opacity": 60,
     "outro": "《얕은 캐릭 없음. 빠져나갈 수 없음 주의》",
     "pushoong": "https://pushoong.com/ask/7127235915",
@@ -34,7 +34,7 @@
         "오지콤",
         "아저씨"
       ],
-      "cover": "assets/poster_linway.png",
+      "cover": "assets/linwei/linwei_poster.png",
       "links": [
         {
           "label": "🥕Umai🥕",
@@ -48,7 +48,7 @@
       "body": "칭챙총이라는 소리에 달려나간 유저.\n마지막 골목을 돌았을 때, 잡힌 허리.\n꼬맹아. 따먹히고 싶어?",
       "adult": true,
       "adultBody": "",
-      "media": "assets/LIN_moving.mp4",
+      "media": "assets/linwei/LIN_moving.mp4",
       "world": "부에노스아이레스 · 엘 무에예",
       "profile": [
         {
