@@ -269,6 +269,20 @@
       "image": "assets/gift/ma_ruru.png",
       "title": "센티넬 농부아저씨들-마희재",
       "from": "RuRu님❤️"
+    },
+    {
+      "id": "gift-9",
+      "kind": "축전",
+      "image": "assets/gift/arikkari.jpg",
+      "title": "센티넬 어부아저씨들",
+      "from": "아리까리님❤️"
+    },
+    {
+      "id": "gift-10",
+      "kind": "축전",
+      "image": "assets/gift/arikkari-2.jpg",
+      "title": "센티넬 어부아저씨들",
+      "from": "아리까리님❤️"
     }
   ]
 }
