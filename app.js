@@ -191,6 +191,10 @@ function charDetail(c){
       return '<button type="button" class="intro-card" data-act="intro" data-c="'+esc(c.id)+'" data-k="'+k+'"><span class="intro-no">도입부 '+(k+1)+'</span><span class="intro-t">'+esc(x.title||("도입부 "+(k+1)))+'</span>'+(x.hook?'<span class="intro-h">'+esc(x.hook)+'</span>':"")+'<span class="intro-go">읽어보기 →</span></button>';
     }).join("")+'</div>':soon("도입부는 준비 중이에요");
   var lore=(c.lore||[]).filter(function(x){return x&&x.title;});
+  var cast=(c.cast||[]).filter(function(x){return x&&x.name;});
+  var castHtml='<div class="cast">'+cast.map(function(x){var im=src(x.image);
+    return '<article class="cast-card">'+(im?'<img src="'+esc(im)+'" alt="" loading="lazy">':'<span class="cast-i" aria-hidden="true">'+esc(x.name.charAt(0))+'</span>')+
+      '<div class="cast-b"><h3>'+esc(x.name)+'</h3>'+(x.meta?'<span class="cast-m">'+esc(x.meta)+'</span>':"")+(x.body?'<div class="prose">'+prose(x.body)+'</div>':"")+'</div></article>';}).join("")+'</div>';
   var loreHtml='<div class="lore">'+lore.map(function(x){return '<article class="lore-card"><h3>'+esc(x.title)+'</h3><div class="prose">'+prose(x.body)+'</div></article>';}).join("")+'</div>';
   var bc=(c.bcuts||[]).filter(function(b){return src(typeof b==="string"?b:b&&b.image);});
   var gallery=bc.length?'<div class="bcuts">'+bc.map(function(b,k){var u=typeof b==="string"?b:b.image,cap=typeof b==="string"?"":(b.caption||"");
@@ -203,7 +207,7 @@ function charDetail(c){
   var mateHtml=mates.length?'<div class="mates">'+mates.map(function(x){var im=src(x.cover),lk=x.adult&&!isAdult();
       return '<a class="mate'+(lk?" lock":"")+'" href="#c-'+esc(x.id)+'">'+(im?'<img src="'+esc(im)+'" alt="" loading="lazy">':'<span class="ph">'+esc((x.name||"?").charAt(0))+'</span>')+'<span class="mate-n">'+esc(x.name)+'</span></a>';}).join("")+'</div>':soon("같은 세계관 캐릭터는 준비 중이에요");
   return subHeader()+'<main class="wrap detail">'+head+top+
-    (function(){var parts=[["도입부",introHtml]];if(lore.length)parts.push(["세계관",loreHtml]);parts.push(["B컷",gallery],["비설",secret],["플레이 팁",tipHtml],["같은 세계관"+(c.world?' <small>'+esc(c.world)+'</small>':""),mateHtml]);
+    (function(){var parts=[["도입부",introHtml]];if(lore.length)parts.push(["세계관",loreHtml]);if(cast.length)parts.push(["등장인물",castHtml]);parts.push(["B컷",gallery],["비설",secret],["플레이 팁",tipHtml],["같은 세계관"+(c.world?' <small>'+esc(c.world)+'</small>':""),mateHtml]);
       return parts.map(function(pt,k){return block(pad(k+1),pt[0],pt[1]);}).join("");})()+
     '<div class="cd-end">'+charLinks(c)+'<a class="abtn" style="display:inline-flex;align-items:center;text-decoration:none" href="#c-'+esc(c.id)+'">← 소개로 돌아가기</a></div>'+
     '</main>'+footer();
