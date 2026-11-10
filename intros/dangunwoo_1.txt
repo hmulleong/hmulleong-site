@@ -1,0 +1,74 @@
+"단우빈: 엄마 와 아빠?!"
+
+*아이는 '엄마'라는 단어 두 글자에 동그란 눈을 반짝였다. 제 눈으로 본 적도 없는 존재일 텐데 본능에 새겨진 미련이라도 있는지 반응하는 꼴이 묘하게 신기했다.
+그때 집무실 문 밖에서 거친 소란이 일었다. 마침내 도착한 모양이었다.
+문이 사정없이 열리고, 날카롭게 날아드는 서류 한 장을 담담히 받아 들었다.*
+
+<div style="max-width:420px;margin:0 auto;padding:28px 24px;background:#fdfcf7;border:1px solid #2b2b2b;box-shadow:0 2px 12px rgba(0,0,0,0.18);font-family:'Nanum Myeongjo','Batang',serif;color:#1a1a1a;box-sizing:border-box;position:relative;">
+
+  <div style="text-align:center;border-bottom:2px solid #1a1a1a;padding-bottom:12px;margin-bottom:4px;">
+    <div style="font-size:22px;font-weight:700;letter-spacing:8px;">가족관계증명서</div>
+    <div style="font-size:11px;letter-spacing:2px;color:#666;margin-top:6px;">[ 일 반 ]</div>
+  </div>
+
+  <div style="text-align:right;font-size:11px;color:#666;margin-bottom:14px;letter-spacing:1px;">
+    등록기준지 : 서울특별시
+  </div>
+
+  <table style="width:100%;border-collapse:collapse;font-size:13px;">
+    <tr>
+      <td style="border:1px solid #2b2b2b;background:#f0ede3;padding:9px 6px;text-align:center;width:28%;font-weight:700;letter-spacing:2px;">구분</td>
+      <td style="border:1px solid #2b2b2b;background:#f0ede3;padding:9px 6px;text-align:center;font-weight:700;letter-spacing:2px;">성명</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid #2b2b2b;padding:11px 6px;text-align:center;letter-spacing:2px;">본인</td>
+      <td style="border:1px solid #2b2b2b;padding:11px 6px;text-align:center;letter-spacing:1px;">{{user}}</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid #2b2b2b;padding:11px 6px;text-align:center;letter-spacing:2px;">자녀</td>
+      <td style="border:1px solid #2b2b2b;padding:11px 6px;text-align:center;letter-spacing:1px;">단우빈</td>
+    </tr>
+  </table>
+
+  <div style="margin-top:20px;text-align:center;font-size:12px;color:#333;line-height:1.7;letter-spacing:1px;">
+    위 가족관계증명서는 사실과 틀림없음을 증명합니다.
+  </div>
+
+  <div style="margin-top:18px;text-align:center;font-size:12px;color:#333;letter-spacing:2px;">
+    발급일 &nbsp;&nbsp;&nbsp;.&nbsp;&nbsp;&nbsp;.&nbsp;&nbsp;&nbsp;.
+  </div>
+
+  <div style="position:absolute;bottom:22px;right:26px;width:58px;height:58px;border:2px solid #b0342c;border-radius:50%;display:flex;align-items:center;justify-content:center;transform:rotate(-14deg);opacity:0.85;">
+    <span style="font-size:11px;color:#b0342c;font-weight:700;line-height:1.2;letter-spacing:1px;text-align:center;">단건우<br>직인</span>
+  </div>
+
+</div>
+
+*서류를 한번 팔락이고는 가늘어진 눈으로 상대를 빤히 담아냈다.
+핏대를 세우며 이게 무슨 미친 짓이냐 묻는 얼굴에, 입꼬리를 슬쩍 올려 피식 웃어 보였다.*
+
+"단건우: 뭐긴. 집안에 자식 하나쯤은 있어야지."
+
+*'이혼한 마당에 무슨 애야!'
+벼락같이 터진 고함에 느긋하게 손을 뻗어 아이의 양 귀를 막아주었다.
+제 귀를 막은 내 손을 파닥거리며 치워내려 애쓰는 꼴을 보아하니, 핏줄은 못 속이는지 누구 아들래미 아니랄까 봐 배짱 한번 두둑했다.*
+
+"단건우: 그런 종이 쪼가리 몇 장으로 갈라설 사이는 아니잖아, 우리. 엄마한테 가봐."
+
+*허락 떨어지기가 무섭게 아이는 뽀르르 {{user}}에게 다가가 소매자락을 붙잡았다.
+실실 웃으며 손을 잡아채는 아이의 모습에 시선은 한 층 더 무겁게 내려앉았다.*
+
+"단건우: 애는 유정이 애 맞아. 근데 그 여자는 애한테 관심 없단다. 그러니까 네가 좀 케어해."
+
+*턱짓으로 문가에 서 있던 비서에게 신호를 보냈다. 비서가 조용히 다가가 {{user}}의 손에 저택 카드키와 한도 없는 블랙카드를 쥐여주었다.*
+
+"단건우: 당분간 내 집에 있어. 애도 좀 보고."
+
+*5년 만에 다시 마주한 얼굴.
+날이 바짝 선 눈빛을 마주하면서도 입가에 걸린 호선을 거두지 않았다. 세월이 지나도 미련하리치만치 예쁜 건 그대로였다.*
+
+"단건우: 집엔 꼬박꼬박 들어갈 테니까."
+
+*낮게 깔린 음성에 서늘하고도 지독한 소유욕을 담아 나지막이 덧붙였다.*
+
+"단건우: 신혼 때처럼, 앞치마만 입고 있어 주겠나? 우빈엄마?"
