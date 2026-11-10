@@ -212,16 +212,53 @@ function charDetail(c){
     '<div class="cd-end">'+charLinks(c)+'<a class="abtn" style="display:inline-flex;align-items:center;text-decoration:none" href="#c-'+esc(c.id)+'">← 소개로 돌아가기</a></div>'+
     '</main>'+footer();
 }
-function storyHtml(t){
-  function inline(x){
-    return esc(x).replace(/\*\*(.+?)\*\*/g,"<strong>$1</strong>").replace(/(&quot;[^\n]*?&quot;|\u201C[^\u201D\n]*\u201D)/g,'<span class="q">$1</span>');
+var VOID_TAGS={area:1,base:1,br:1,col:1,embed:1,hr:1,img:1,input:1,link:1,meta:1,source:1,track:1,wbr:1};
+function cleanHtml(h){
+  var t=document.createElement("template");t.innerHTML=h;
+  var bad=t.content.querySelectorAll("script,iframe,object,embed,link,meta,base,style,form,frame,frameset");
+  for(var i=0;i<bad.length;i++)bad[i].remove();
+  var all=t.content.querySelectorAll("*");
+  for(var j=0;j<all.length;j++){
+    var el=all[j],at=Array.prototype.slice.call(el.attributes);
+    at.forEach(function(a){var n=a.name.toLowerCase(),v=String(a.value||"");
+      if(n.indexOf("on")===0||((n==="href"||n==="src"||n==="xlink:href"||n==="action")&&/^\s*(javascript|data:text|vbscript)/i.test(v))||(n==="style"&&/expression\(|url\(\s*['"]?\s*javascript/i.test(v)))el.removeAttribute(a.name);});
   }
-  return String(t||"").replace(/\r/g,"").split(/\n\s*\n/).map(function(par){
+  return t.innerHTML;
+}
+function pullHtml(text,blocks){
+  var lines=text.split("\n"),out=[],buf=null,depth=0;
+  for(var i=0;i<lines.length;i++){
+    var ln=lines[i],tr=ln.trim();
+    if(buf===null&&/^<[a-zA-Z]/.test(tr)){buf=[];depth=0;}
+    if(buf!==null){
+      buf.push(ln);
+      var tags=ln.match(/<\/?[a-zA-Z][\w-]*\b[^>]*>/g)||[];
+      tags.forEach(function(tg){var nm=(/^<\/?([a-zA-Z][\w-]*)/.exec(tg)||[])[1];nm=(nm||"").toLowerCase();
+        if(tg.charAt(1)==="/")depth--;else if(!VOID_TAGS[nm]&&!/\/>$/.test(tg))depth++;});
+      if(depth<=0){blocks.push(buf.join("\n"));out.push("","@@HTMLBLOCK"+(blocks.length-1)+"@@","");buf=null;}
+    }else out.push(ln);
+  }
+  if(buf!==null){blocks.push(buf.join("\n"));out.push("","@@HTMLBLOCK"+(blocks.length-1)+"@@","");}
+  return out.join("\n");
+}
+function storyHtml(t,who){
+  function inline(x){
+    return esc(x).replace(/\*\*(.+?)\*\*/g,"<strong>$1</strong>").replace(/(&quot;[^\n]*?&quot;|“[^”\n]*”)/g,'<span class="q">$1</span>');
+  }
+  var blocks=[];
+  var text=String(t||"").replace(/\r/g,"").replace(/\{\{\s*user\s*\}\}/gi,"당신");
+  if(who)text=text.replace(/\{\{\s*char\s*\}\}/gi,who);
+  text=pullHtml(text,blocks);
+  return text.split(/\n\s*\n/).map(function(par){
     par=par.trim();if(!par)return"";
+    var hb=/^@@HTMLBLOCK(\d+)@@$/.exec(par);
+    if(hb)return '<div class="story-html">'+cleanHtml(blocks[+hb[1]])+'</div>';
     if(par.charAt(0)==="*"&&par.slice(0,2)!=="**"){
       var body=par.replace(/^\*+|\*+$/g,"").replace(/\*+\s*\n\s*\*+/g,"\n");
       return '<p class="nar">'+inline(body).replace(/\n/g,"<br>")+'</p>';
     }
+    var q=/^["“]([^:"”\n|]{1,20}?)\s*:\s*([\s\S]*?)["”]$/.exec(par);
+    if(q)return '<p class="say"><span class="who">'+esc(q[1].trim())+'</span><span class="line"><span class="q">"'+esc(q[2]).replace(/\*\*(.+?)\*\*/g,"<strong>$1</strong>").replace(/\n/g,"<br>")+'"</span></span></p>';
     var m=/^([^|\n]{1,20}?)\s*\|\s*([\s\S]+)$/.exec(par);
     if(m)return '<p class="say"><span class="who">'+esc(m[1].trim())+'</span><span class="line">'+inline(m[2]).replace(/\n/g,"<br>")+'</span></p>';
     return '<p>'+inline(par).replace(/\n/g,"<br>")+'</p>';
@@ -231,7 +268,7 @@ function openIntro(c,k){
   var list=(c.intros||[]).filter(function(x){return x&&(x.title||x.body);});var x=list[k];if(!x)return;
   var last=document.activeElement,link=safeUrl(x.link);
   var ov=document.createElement("div");ov.className="reader";ov.setAttribute("role","dialog");ov.setAttribute("aria-modal","true");ov.setAttribute("aria-label",x.title||"도입부");
-  ov.innerHTML='<article class="reader-in"><button type="button" class="reader-x" aria-label="닫기">✕</button><span class="intro-no">'+esc(c.name)+' · 도입부 '+(k+1)+'</span><h2>'+esc(x.title||("도입부 "+(k+1)))+'</h2><div class="prose story">'+(x.file?'<p class="nar">불러오는 중…</p>':storyHtml(x.body))+'</div>'+
+  ov.innerHTML='<article class="reader-in"><button type="button" class="reader-x" aria-label="닫기">✕</button><span class="intro-no">'+esc(c.name)+' · 도입부 '+(k+1)+'</span><h2>'+esc(x.title||("도입부 "+(k+1)))+'</h2><div class="prose story">'+(x.file?'<p class="nar">불러오는 중…</p>':storyHtml(x.body,c.name))+'</div>'+
     (link?'<a class="pill" href="'+esc(link)+'" target="_blank" rel="noopener"><span class="l">이 도입부로 시작하기 ↗</span></a>':"")+'</article>';
   function close(){ov.remove();document.removeEventListener("keydown",key);document.body.style.overflow="";if(last&&last.focus)last.focus();}
   function key(e){if(e.key==="Escape")close();}
@@ -239,7 +276,7 @@ function openIntro(c,k){
   document.addEventListener("keydown",key);document.body.appendChild(ov);document.body.style.overflow="hidden";ov.querySelector(".reader-x").focus();
   if(x.file){var fu=src(x.file),box=ov.querySelector(".story");
     if(!fu){box.innerHTML='<p class="nar">도입부 파일 이름을 확인해 주세요.</p>';return;}
-    fetch(encodeURI(fu),{cache:"no-cache"}).then(function(r){if(!r.ok)throw 0;return r.text();}).then(function(t){box.innerHTML=storyHtml(t);},function(){box.innerHTML='<p class="nar">도입부 파일('+esc(x.file)+')을 찾지 못했어요.</p>';});}
+    fetch(encodeURI(fu),{cache:"no-cache"}).then(function(r){if(!r.ok)throw 0;return r.text();}).then(function(t){box.innerHTML=storyHtml(t,c.name);},function(){box.innerHTML='<p class="nar">도입부 파일('+esc(x.file)+')을 찾지 못했어요.</p>';});}
 }
 function openLightbox(c,k){
   var list=(c.bcuts||[]).filter(function(b){return src(typeof b==="string"?b:b&&b.image);}).map(function(b){return typeof b==="string"?{image:b,caption:""}:b;});
@@ -286,6 +323,7 @@ function dock(){
 var lastMode=null;
 function route(){
   if(!S)return;
+  var ovs=document.querySelectorAll(".reader,.lb");for(var oi=0;oi<ovs.length;oi++)ovs[oi].remove();document.body.style.overflow="";
   var h=decodeURIComponent((location.hash||"").slice(1)),html,mode="home",anchor=null;
   var m=/^(c|p|g)-(.+)$/.exec(h),cd=/^cd-(.+)$/.exec(h);
   if(cd){var cc=find(S.chars,cd[1]);if(cc){mode=h;html=charDetail(cc);}}

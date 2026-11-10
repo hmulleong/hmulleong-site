@@ -332,3 +332,7 @@ a{color:inherit}
 .cast-m{font:500 11.5px var(--f-display);letter-spacing:.08em;color:var(--dim)}
 .cast-b .prose{font-size:13.5px;line-height:1.75;margin-top:4px}
 .cast-b .prose p{margin:0 0 .6em}
+
+/* HTML blocks inside intro text (documents, cards) */
+.story .story-html{margin:1.8em 0;max-width:100%;overflow-x:auto;line-height:normal}
+.story .story-html *{max-width:100%}
