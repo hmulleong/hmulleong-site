@@ -321,3 +321,14 @@ a{color:inherit}
 
 /* "from ..." : black text with a white neon glow */
 .mq-cap>span:not(.tag),.gc .cap span{color:#0A0A0A;font-weight:600;font-size:13px;text-shadow:0 0 2px #fff,0 0 4px #fff,0 0 8px #fff,0 0 14px rgba(255,255,255,.85)}
+
+/* cast cards */
+.cast{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:12px}
+.cast-card{display:flex;gap:16px;align-items:flex-start;border:1px solid var(--line);border-radius:20px;padding:18px}
+.cast-card img,.cast-i{flex:0 0 72px;width:72px;height:72px;border-radius:50%;object-fit:cover}
+.cast-i{display:flex;align-items:center;justify-content:center;background:var(--bg);border:1px solid var(--line-2);font-family:var(--f-display);font-weight:300;font-size:30px;color:var(--muted)}
+.cast-b{min-width:0;display:flex;flex-direction:column;gap:4px}
+.cast-b h3{margin:0;font-family:var(--f-display);font-weight:500;font-size:18px}
+.cast-m{font:500 11.5px var(--f-display);letter-spacing:.08em;color:var(--dim)}
+.cast-b .prose{font-size:13.5px;line-height:1.75;margin-top:4px}
+.cast-b .prose p{margin:0 0 .6em}
