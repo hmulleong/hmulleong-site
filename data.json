@@ -217,7 +217,14 @@
           "v": "왼손의 결혼반지를 돌린다"
         }
       ],
-      "intros": [],
+      "intros": [
+           {
+             "title": "우빈엄마",
+             "hook": "5년 만에 불려온 집무실. 날아든 가족관계증명서 한 장.",
+             "file": "intros/dangunwoo_1.txt",
+             "link": "https://uumm.ai/works/01a00a24-a67b-72b2-8749-bbb9eb940910"
+           }
+         ],
       "lore": [
         {
           "title": "공개된 사실",
