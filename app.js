@@ -219,12 +219,21 @@ function charTile(c){var im=src(c.cover),lk=c.adult&&!isAdult();
   return '<a class="wc'+(lk?" lock":"")+'" href="#c-'+esc(c.id)+'">'+(im?'<img src="'+esc(im)+'" alt="" loading="lazy">':'<span class="ph" aria-hidden="true">'+esc((c.name||"?").charAt(0))+'</span>')+
     '<span class="sh" aria-hidden="true"></span>'+(c.adult?'<span class="b19" aria-label="성인 전용">19</span>':"")+'<span class="wc-b"><b>'+esc(c.name)+'</b>'+(c.role?'<span>'+esc(c.role)+'</span>':"")+'</span></a>';}
 function soonTile(n){return '<div class="wc wc-soon"><span class="ph" aria-hidden="true">'+esc((n||"?").charAt(0))+'</span><span class="wc-b"><b>'+esc(n)+'</b><span>준비 중</span></span></div>';}
+function worldCards(ws){
+  return '<div class="worlds">'+ws.map(function(w,i){var im=src(w.cover),n=worldChars(w).length;
+    (w.groups||[]).forEach(function(g){n+=(g.soon||[]).length;});
+    return '<a class="wd" href="#w-'+esc(w.id)+'">'+(im?'<img src="'+esc(im)+'" alt="" loading="lazy">':'<span class="ph" aria-hidden="true">'+esc((w.name||"?").charAt(0))+'</span>')+'<span class="sh" aria-hidden="true"></span>'+
+      '<span class="num">'+pad(i+1)+'</span><span class="wd-b"><b>'+esc(w.name)+'</b>'+(w.sub?'<span>'+esc(w.sub)+'</span>':"")+'<small>캐릭터 '+n+'</small></span></a>';}).join("")+'</div>';
+}
+function worldsSec(){
+  var ws=S.worlds||[];if(!ws.length)return"";
+  return '<section class="sec" id="worlds-home"><div class="wrap"><div class="sec-head"><div><h2>Worlds</h2><p>세계관을 고르면 그 안의 캐릭터들을 만날 수 있어요.</p></div>'+
+    '<a href="#worlds" class="pill"><span class="l">전체 보기</span><span class="a">'+ARROW+'</span></a></div>'+worldCards(ws.slice(0,3))+'</div></section>';
+}
 function worldsView(){
   var ws=S.worlds||[];
   return subHeader()+'<main class="wrap detail"><a class="back" href="#top">← 메인으로</a><div class="sec-head" style="margin-top:24px"><div><h2>Worlds</h2><p>세계관을 고르면 그 안의 캐릭터들을 만날 수 있어요.</p></div></div>'+
-    (ws.length?'<div class="worlds">'+ws.map(function(w,i){var im=src(w.cover),n=worldChars(w).length;
-      return '<a class="wd" href="#w-'+esc(w.id)+'">'+(im?'<img src="'+esc(im)+'" alt="" loading="lazy">':'<span class="ph" aria-hidden="true">'+esc((w.name||"?").charAt(0))+'</span>')+'<span class="sh" aria-hidden="true"></span>'+
-        '<span class="num">'+pad(i+1)+'</span><span class="wd-b"><b>'+esc(w.name)+'</b>'+(w.sub?'<span>'+esc(w.sub)+'</span>':"")+'<small>캐릭터 '+n+'</small></span></a>';}).join("")+'</div>':soon("세계관은 준비 중이에요"))+
+    (ws.length?worldCards(ws):soon("세계관은 준비 중이에요"))+
     '</main>'+footer();
 }
 function worldView(w){
@@ -372,7 +381,7 @@ function route(){
   else if(h==="all-gifts"){mode=h;html=allGifts();}
   else if(h==="worlds"){mode=h;html=worldsView();}
   else if(/^w-/.test(h)){var ww=null;(S.worlds||[]).forEach(function(x){if("w-"+x.id===h)ww=x;});if(ww){mode=h;html=worldView(ww);}}
-  if(mode==="home"){anchor=h||null;if(lastMode!=="home"){html=hero()+charsSec()+newsSec()+giftsSec()+linksSec()+outro()+footer();}}
+  if(mode==="home"){anchor=h||null;if(lastMode!=="home"){html=hero()+charsSec()+worldsSec()+newsSec()+giftsSec()+linksSec()+outro()+footer();}}
   if(html!=null){app.innerHTML=html+dock();if(mode==="home")bindCarousel();}
   if(mode!=="home"){window.scrollTo(0,0);}
   else if(lastMode!=="home"&&anchor){var el=document.getElementById(anchor);if(el)el.scrollIntoView();}
