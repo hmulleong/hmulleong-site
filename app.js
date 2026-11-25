@@ -345,7 +345,7 @@ function postView(p){
   return subHeader()+'<main class="wrap detail"><article class="post"><a class="back" href="#news">← Notice &amp; News</a>'+
     '<div class="d-meta" style="margin-top:20px">'+(p.pinned?'<span class="tag w">PINNED</span>':"")+(KIND[p.kind]||"NOTICE")+' · '+esc(fmt(p.date))+'</div>'+
     '<h1>'+esc(p.title)+'</h1>'+(im?'<figure><img src="'+esc(im)+'" alt=""></figure>':"")+'<div class="prose">'+prose(p.body)+'</div>'+
-    (link?'<a class="pill" href="'+esc(link)+'" target="_blank" rel="noopener"><span class="l">링크 열기 ↗</span><span class="a">'+ARROW+'</span></a>':"")+
+    (link?'<a class="pill" href="'+esc(link)+'" target="_blank" rel="noopener"><span class="l">'+esc(p.linkLabel||"링크 열기")+' ↗</span><span class="a">'+ARROW+'</span></a>':"")+
     adminRow("post",p.id)+'</article></main>'+footer();
 }
 function giftView(g){
